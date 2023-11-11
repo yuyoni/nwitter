@@ -16,15 +16,18 @@ import Profile from "components/Profile";
 import Navigation from "components/Navigation";
 
 // (isLoggedIn) : 상위 컴포넌트에서 받은 프롭스를 구조 분해 할당으로 사용
-const AppRouter = ({ isLoggedIn, userObj }) => {
+const AppRouter = ({ isLoggedIn, userObj, refreshUser }) => {
   return (
     <Router>
-      {isLoggedIn && <Navigation />}
+      {isLoggedIn && <Navigation userObj={userObj} />}
       <Routes>
         {isLoggedIn ? (
           <>
             <Route path="/" element={<Home userObj={userObj} />} />
-            <Route path="/profile" element={<Profile />} />
+            <Route
+              path="/profile"
+              element={<Profile refreshUser={refreshUser} userObj={userObj} />}
+            />
           </>
         ) : (
           <Route path="/" element={<Auth />} />
