@@ -8,13 +8,16 @@ const Home = ({ userObj }) => {
 
   useEffect(() => {
     // async - await 문을 사용하는 함수가 useEffect에 포함되어 있으면, 그 함수는 따로 빼서 정의해야함
-    dbService.collection("nweets").onSnapshot((snapshot) => {
-      const newArray = snapshot.docs.map((document) => ({
-        id: document.id,
-        ...document.data(),
-      }));
-      setNweets(newArray);
-    });
+    dbService
+      .collection("nweets")
+      .orderBy("createdAt", "desc")
+      .onSnapshot((snapshot) => {
+        const newArray = snapshot.docs.map((document) => ({
+          id: document.id,
+          ...document.data(),
+        }));
+        setNweets(newArray);
+      });
   }, []);
 
   return (
